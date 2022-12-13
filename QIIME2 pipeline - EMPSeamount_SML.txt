@@ -1,0 +1,902 @@
+
+
+
+|####################################################################################################
+|AM18S###############################################################################################
+|####################################################################################################
+===============================================================================
+#Filtering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+#removing Octocorallia-affiliated ASVs;removing ASVs with <10 frequency;vizualizing
+
+qiime taxa filter-table \
+  --i-table EMPALL_AM18S_table.qza \
+  --i-taxonomy EMPALL_AM18S_taxonomy.qza \
+  --p-exclude Octocorallia \
+  --o-filtered-table tablefiltered_AM18sall_minusoctocorallia.qza
+qiime feature-table filter-features \
+  --i-table table_AM18sall_minusoctocorallia.qza \
+  --p-min-frequency 10 \
+  --o-filtered-table tablefiltered_AM18sall_minusoctocorallia.qza
+qiime feature-table summarize \
+  --i-table Files/tablefiltered_minusoctocorallia.qza \
+  --m-sample-metadata-file Files/metadata_range.txt \
+  --o-visualization Files/tablefiltered_minusoctocorallia.qzv
+qiime taxa barplot \
+  --i-table Files/tablefiltered_minusoctocorallia.qza \
+  --i-taxonomy Files/taxonomy.qza \
+  --m-metadata-file Files/metadata_range.txt \
+  --o-visualization Files/taxabarplot_filtered_minusoctocorallia.qzv
+Qiime tools view Files/taxabarplot_filtered_minusoctocorallia.qzv
+
+===============================================================================
+#Alpha diversity ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+#rarefaction;Core metrics with phylogenetic measures (used for 16S & 18S); Graphically and statistically compare certain outputs from the core metrics that you want
+
+qiime diversity alpha-rarefaction \
+  --i-table Files/tablefiltered_minusoctocorallia.qza \
+  --i-phylogeny Files/rooted-tree.qza \
+  --p-max-depth 7878 \
+  --m-metadata-file Files/metadata_range.txt \
+  --o-visualization AlphaDiversity/alpha-rarefaction_AM18S.qzv
+qiime diversity core-metrics-phylogenetic \
+  --i-phylogeny Files/rooted-tree.qza \
+  --i-table Files/tablefiltered_minusoctocorallia.qza \
+  --p-sampling-depth 7878 \
+  --m-metadata-file Files/metadata_range.txt \
+  --output-dir core-metrics-results
+----------
+#Shannon#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results/shannon_vector.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --o-visualization core-metrics-results/shannon-vector-group-significance.qzv
+Qiime tools view core-metrics-results/shannon-vector-group-significance.qzv
+--------
+#FAITH#|
+--------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results/faith_pd_vector.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --o-visualization core-metrics-results/faith-pd-group-significance.qzv
+Qiime tools view core-metrics-results/faith-pd-group-significance.qzv
+------
+#OTU#|
+------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results/observed_features_vector.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --o-visualization core-metrics-results/observed-features-group-significance.qzv
+Qiime tools view core-metrics-results/observed-features-group-significance.qzv
+-----------
+#Evenness#|
+-----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results/evenness_vector.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --o-visualization core-metrics-results/evenness_vector-significance.qzv
+Qiime tools view core-metrics-results/evenness_vector-significance.qzv
+
+
+===============================================================================
+#Beta diversity ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+-------------------
+#Weighted UniFrac#|
+------------------
+SAMPLETYPE
+~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --m-metadata-column SampleType \
+  --p-pairwise \
+  --o-visualization core-metrics-results/weighted-unifrac-sample-Site-significance.qzv
+Qiime tools view core-metrics-results/weighted-unifrac-sample-Site-significance.qzv
+~~~~~~
+DEPTH
+~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --m-metadata-column Depth \
+  --p-pairwise \
+  --o-visualization core-metrics-results/weighted-unifrac-Depth_Site-significance.qzv
+Qiime tools view core-metrics-results/weighted-unifrac-Depth_Site-significance.qzv
+~~~~~~~~~
+SALINITY
+~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --m-metadata-column Salinity \
+  --p-pairwise \
+  --o-visualization core-metrics-results/weighted-unifrac-Salinity_Site-significance.qzv
+Qiime tools view core-metrics-results/weighted-unifrac-Salinity_Site-significance.qzv
+~~~~~
+NPDW
+~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --m-metadata-column npdw \
+  --p-pairwise \
+  --o-visualization core-metrics-results/weighted-unifrac-npdw_Site-significance.qzv
+Qiime tools view core-metrics-results/weighted-unifrac-npdw_Site-significance.qzv
+---------------------
+#Unweighted UniFrac#|
+---------------------
+DEPTH
+~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --m-metadata-column Depth \
+  --p-pairwise \
+  --o-visualization core-metrics-results/unweighted_unifrac-Depth_Site-significance.qzv
+Qiime tools view core-metrics-results/unweighted_unifrac-Depth_Site-significance.qzv
+----------
+#Jaccard#|
+----------
+NPDW
+~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --m-metadata-column npdw \
+  --p-pairwise \
+  --o-visualization core-metrics-results/Jaccard-vector-group_npdw-significance.qzv
+Qiime tools view core-metrics-results/Jaccard-vector-group_npdw-significance.qzv
+~~~~~~
+DEPTH
+~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --m-metadata-column Depth \
+  --p-pairwise \
+  --o-visualization core-metrics-results/Jaccard-vector-group_depth-significance.qzv
+Qiime tools view core-metrics-results/Jaccard-vector-group_depth-significance.qzv
+~~~~~~~~
+SALINITY
+~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range_AM18S.txt \
+  --m-metadata-column Salinity \
+  --p-pairwise \
+  --o-visualization core-metrics-results/Jaccard-vector-group_salinity-significance.qzv
+Qiime tools view core-metrics-results/Jaccard-vector-group_salinity-significance.qzv
+
+===============================================================================
+#heatmap~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+#Filter features; collapse table to taxonomic level; Construct heat map; Visualize
+
+qiime feature-table rarefy \
+  --i-table Files/tablefiltered_minusoctocorallia.qza \
+  --p-sampling-depth 7878 \
+  --o-rarefied-table Heatmap/rarefied_filtered_table_minusoctocorallia.qza
+
+qiime feature-table summarize \
+  --i-table Heatmap/rarefied_filtered_table_minusoctocorallia.qza \
+  --m-sample-metadata-file Files/metadata_range.txt \
+  --o-visualization Heatmap/rarefied_filtered_table_minusoctocorallia.qzv
+Qiime tools view Heatmap/rarefied_filtered_table_minusoctocorallia.qzv
+qiime feature-table filter-features \
+  --i-table heatmap/rarefied_filtered_table_minusoctocorallia.qza \
+  --p-min-frequency 400 \
+  --o-filtered-table Heatmap/Only_abundanttaxa_minusoctocorallia.qza
+qiime taxa collapse \
+  --i-table heatmap/Only_abundanttaxa_minusoctocorallia.qza \
+  --i-taxonomy Files/taxonomy.qza \
+  --p-level 6 \
+  --o-collapsed-table heatmap/Only_abundanttaxa_taxacollapse4_minusoctocorallia.qza
+qiime feature-table heatmap \
+  --i-table heatmap/Only_abundanttaxa_taxacollapse4_minusoctocorallia.qza \
+  --m-sample-metadata-file Files/metadata_range.txt \
+  --m-sample-metadata-column SampleType \
+  --p-color-scheme coolwarm \
+  --o-visualization heatmap/AM18S-heatmaplevel6_400_sample.qzv
+Qiime tools view heatmap/AM18S-heatmaplevel6_400_sample.qzv
+
+
+===============================================================================
+#ANCOM~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+#Collapse table to taxonomic level; Filter features; Add Pseudocount; ANCOM test
+
+qiime taxa collapse \
+  --i-table Files/tablefiltered_minusoctocorallia.qza \
+  --i-taxonomy Files/taxonomy.qza \
+  --p-level 6 \
+  --o-collapsed-table ancom/tablefiltered_minusoctocorallia_level6.qza
+qiime feature-table filter-features \
+  --i-table ancom/tablefiltered_minusoctocorallia_level6.qza \
+  --p-min-frequency 10 \
+  --p-min-samples 6 \
+  --o-filtered-table ancom/table_ancom_level_6.qza
+qiime composition add-pseudocount \
+  --i-table ancom/table_ancom_level_6.qza \
+  --o-composition-table ancom/table_ancom-pseudocount-level6.qza
+qiime composition ancom \
+  --i-table ancom/table_ancom-pseudocount-level6.qza \
+  --m-metadata-file Files/metadata_range.txt \
+  --m-metadata-column SampleType \
+  --o-visualization ancom/ancom_lvl6_freq10.qzv
+Qiime tools view ancom/ancom_lvl6_freq10.qzv
+
+
+
+#####################################################################################################
+AM18S CORAL##########################################################################################
+#####################################################################################################
+
+===============================================================================
+#Filter samples by sample type; summarize table to ensure it worked
+===============================================================================
+qiime feature-table filter-samples \
+  --i-table tablefiltered_AM18sall_minusoctocorallia.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --o-filtered-table id-filtered-table_coral.qza
+
+qiime feature-table summarize \
+  --i-table id-filtered-table_coral.qza \
+  --m-sample-metadata-file sample_metadatacoral_AM18S.txt \
+  --o-visualization coralAM18S/id-filtered-table_coral.qzv
+Qiime tools view coralAM18S/id-filtered-table_coral.qzv
+
+===============================================================================
+#Alpha Diversity~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+#rarefaction;Core metrics with phylogenetic measures (used for 16S & 18S); Graphically and statistically compare certain outputs from the core metrics that you want
+
+qiime diversity alpha-rarefaction \
+  --i-table id-filtered-table_coral.qza \
+  --i-phylogeny rooted-tree.qza \
+  --p-max-depth 7878 \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --o-visualization alpha-rarefaction.qzv
+qiime diversity core-metrics-phylogenetic \
+  --i-phylogeny rooted-tree.qza \
+  --i-table id-filtered-table_coral.qza \
+  --p-sampling-depth 7878 \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --output-dir core-metrics-results-coral
+----------
+#Shannon#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results-coral/shannon_vector.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --o-visualization core-metrics-results-coral/shannon-vector-group-significance-Sed.qzv
+Qiime tools view core-metrics-results-coral/shannon-vector-group-significance-Sed.qzv
+----------
+#FAITH#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results-coral/faith_pd_vector.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --o-visualization core-metrics-results-coral/faith-pd-group-significance.qzv
+Qiime tools view core-metrics-results-coral/faith-pd-group-significance.qzv
+----------
+#OTU#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results-coral/observed_features_vector.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --o-visualization core-metrics-results-coral/observed-features-group-significance.qzv
+Qiime tools view core-metrics-results-coral/observed-features-group-significance.qzv
+----------
+#EVENNESS#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results-coral/evenness_vector.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --o-visualization core-metrics-results-coral/evenness_vector-significance.qzv
+Qiime tools view core-metrics-results-coral/evenness_vector-significance.qzv
+
+===============================================================================
+#Beta Diversity~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+-------------------
+#Weighted Unifrac#|
+-------------------
+SAMPLETYPE
+~~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column SampleType \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-SampleType_Site-significance.qzv
+Qiime tools view core-metrics-results-sediments/weighted-unifrac-SampleType_Site-significance.qzv
+~~~~~~
+DEPTH
+~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Depth \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-Depth_Site-significance.qzv
+Qiime tools view core-metrics-results-sediments/weighted-unifrac-Depth_Site-significance.qzv
+~~~~~~~~
+Salinity
+~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Salinity \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-Salinity_Site-significance.qzv
+Qiime tools view core-metrics-results/weighted-unifrac-Salinity_Site-significance.qzv
+~~~~~~~
+NPDW
+~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column npdw \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-npdw_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-npdw_Site-significance.qzv
+~~~~~~~~~~~
+TEMPERATURE
+~~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Temperature \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-temp_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-temp_Site-significance.qzv
+~~~~~~~~
+PRESSURE
+~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Pressure \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-pressure_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-pressure_Site-significance.qzv
+~~~~~~~~~~
+CORALGENUS
+~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column CoralGenus \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-coralgenus_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-coralgenus_Site-significance.qzv
+~~~~~~~~~
+SEAMOUNT
+~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Seamount \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-seamount_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-seamount_Site-significance.qzv
+---------------------
+#Unweighted Unifrac#|~
+---------------------
+DEPTH
+~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Depth \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/unweighted-unifrac-Depth_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/unweighted-unifrac-Depth_Site-significance.qzv
+~~~~~~~~
+SALINITY
+~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Salinity \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/unweighted-unifrac-Salinity_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/unweighted-unifrac-Salinity_Site-significance.qzv
+~~~~~~~~
+NPDW
+~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column npdw \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/unweighted-unifrac-npdw_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/unweighted-unifrac-npdw_Site-significance.qzv
+~~~~~~~~~~~
+TEMPERATURE
+~~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Temperature \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/unweighted-unifrac-temp_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/unweighted-unifrac-temp_Site-significance.qzv
+~~~~~~~~~
+PRESSURE
+~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Pressure \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/unweighted-unifrac-pressure_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/unweighted-unifrac-pressure_Site-significance.qzv
+~~~~~~~~~~~
+CORALGENUS
+~~~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column CoralGenus \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/unweighted-unifrac-coralgenus_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/unweighted-unifrac-coralgenus_Site-significance.qzv
+~~~~~~~~~
+SEAMOUNT
+~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Seamount \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/unweighted-unifrac-seamount_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/unweighted-unifrac-seamount_Site-significance.qzv
+---------------------
+#JACCARD#|~
+---------------------
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column npdw \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/Jaccard-vector-group_npdw-significance.qzv
+Qiime tools view core-metrics-results-coral/Jaccard-vector-group_npdw-significance.qzv
+~~~~~
+DEPTH
+~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Depth \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/Jaccard-vector-group_depth-significance.qzv
+Qiime tools view core-metrics-results-coral/Jaccard-vector-group_depth-significance.qzv
+~~~~~~~~
+SALINITY
+~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Salinity \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/Jaccard-vector-group_salinity-significance.qzv
+Qiime tools view core-metrics-results-coral/Jaccard-vector-group_salinity-significance.qzv
+~~~~~~~~~~~
+TEMPERATURE
+~~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Temperature \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/Jaccard-vector-group_temp-significance.qzv
+Qiime tools view core-metrics-results-coral/Jaccard-vector-group_temp-significance.qzv
+~~~~~~~~
+PRESSURE
+~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Pressure \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/Jaccard-vector-group_pressure-significance.qzv
+Qiime tools view core-metrics-results-coral/Jaccard-vector-group_pressure-significance.qzv
+~~~~~~~~~~
+CORALGENUS
+~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column CoralGenus \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/Jaccard-vector-group_coralgenus-significance.qzv
+Qiime tools view core-metrics-results-coral/Jaccard-vector-group_coralgenus-significance.qzv
+~~~~~~~~~
+SEAMOUNT
+~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/jaccard_distance_matrix.qza \
+  --m-metadata-file sample_metadatacoral_AM18S.txt \
+  --m-metadata-column Seamount \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/Jaccard-vector-group_seamount-significance.qzv
+Qiime tools view core-metrics-results-coral/Jaccard-vector-group_seamount-significance.qzv
+
+===============================================================================
+#heatmap~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+#Filter features; collapse table to taxonomic level; Construct heat map; Visualize
+
+
+===============================================================================
+#ANCOM~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+
+|####################################################################################################
+|16S_################################################################################################
+|####################################################################################################
+
+
+===============================================================================
+#Filtering~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+#removing ASVs with <10 frequency
+
+qiime feature-table filter-features \
+  --i-table table.qza \
+  --p-min-frequency 10 \
+  --o-filtered-table Files/table_filtered16S.qza
+qiime feature-table summarize \
+  --i-table Files/table_filtered16S.qza \
+  --m-sample-metadata-file Files/metadata_range.txt \
+  --o-visualization Files/table_filtered16S.qzv
+
+===============================================================================
+#Alpha Diversity~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+#rarefaction;Core metrics with phylogenetic measures (used for 16S & 18S); Graphically and statistically compare certain outputs from the core metrics that you want
+
+qiime diversity alpha-rarefaction \
+  --i-table table_filtered16S.qza \
+  --i-phylogeny rooted-tree.qza \
+  --p-max-depth 3893 \
+  --m-metadata-file sample_metadata.txt \
+  --o-visualization alpha-rarefaction_16S.qzv
+qiime diversity core-metrics-phylogenetic \
+  --i-phylogeny rooted-tree.qza \
+  --i-table table_filtered16S.qza\
+  --p-sampling-depth 3893 \
+  --m-metadata-file sample_metadata.txt \
+  --output-dir core-metrics-results
+----------
+#Shannon#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results/shannon_vector.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --o-visualization core-metrics-results/shannon-vector-group-significance.qzv
+Qiime tools view core-metrics-results/shannon-vector-group-significance.qzv
+----------
+#FAITH#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results/faith_pd_vector.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --o-visualization core-metrics-results/faith-pd-group-significance.qzv
+Qiime tools view core-metrics-results/faith-pd-group-significance.qzv
+----------
+#OTU#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results/observed_features_vector.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --o-visualization core-metrics-results/observed-features-group-significance.qzv
+Qiime tools view core-metrics-results/observed-features-group-significance.qzv
+----------
+#EVENNESS#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results/evenness_vector.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --o-visualization core-metrics-results/evenness_vector-significance.qzv
+Qiime tools view core-metrics-results/evenness_vector-significance.qzv
+
+
+
+===============================================================================
+#Beta Diversity~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+-------------------
+#Weighted Unifrac#|~
+-------------------
+SAMPLETYPE
+~~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --m-metadata-column SampleType \
+  --p-pairwise \
+  --o-visualization core-metrics-results/weighted-unifrac-Site-significance.qzv
+Qiime tools view core-metrics-results/weighted-unifrac-Site-significance.qzv
+~~~~~~
+DEPTH
+~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --m-metadata-column Depth \
+  --p-pairwise \
+  --o-visualization core-metrics-results/weighted-unifrac-Depth_Site-significance.qzv
+Qiime tools view core-metrics-results/weighted-unifrac-Depth_Site-significance.qzv
+~~~~~~~~
+SALINITY
+~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --m-metadata-column Salinity \
+  --p-pairwise \
+  --o-visualization core-metrics-results/weighted-unifrac-Salinity_Site-significance.qzv
+Qiime tools view core-metrics-results/weighted-unifrac-Salinity_Site-significance.qzv
+~~~~
+NPDW
+~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --m-metadata-column npdw \
+  --p-pairwise \
+  --o-visualization core-metrics-results/weighted-unifrac-npdw_Site-significance.qzv
+Qiime tools view core-metrics-results/weighted-unifrac-npdw_Site-significance.qzv
+-------------------
+#Unweighted Unifrac#|~
+-------------------
+DEPTH
+~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results/unweighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_range.txt \
+  --m-metadata-column Depth \
+  --p-pairwise \
+  --o-visualization core-metrics-results/unweighted_unifrac-Depth_Site-significance.qzv
+Qiime tools view core-metrics-results/unweighted_unifrac-Depth_Site-significance.qzv
+
+===============================================================================
+#HEATMAP~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+
+qiime feature-table rarefy \
+  --i-table Files/table_filtered16S.qza \
+  --p-sampling-depth 3893 \
+  --o-rarefied-table Heatmap/rarefied_filtered_table.qza
+qiime feature-table summarize \
+  --i-table heatmap/rarefied_filtered_table.qza \
+  --m-sample-metadata-file Files/metadata_range.txt \
+  --o-visualization heatmap/rarefied_filtered_table.qzv
+Qiime tools view heatmap/rarefied_filtered_table.qzv
+
+qiime feature-table filter-features \
+ --i-table heatmap/rarefied_filtered_table.qza \
+--p-min-frequency 125 \
+ --o-filtered-table heatmap/table_highly_abundant.qza
+qiime taxa collapse \
+ --i-table heatmap/table_highly_abundant.qza \
+ --i-taxonomy Files/taxonomy.qza \
+ --p-level 5 \
+ --o-collapsed-table heatmap/table_highly_abundant_collapsed5.qza
+qiime feature-table heatmap \
+ --i-table heatmap/table_highly_abundant_collapsed5.qza \
+ --m-sample-metadata-file Files/metadata_range.txt \
+ --m-sample-metadata-column SampleType \
+ --p-color-scheme coolwarm \
+ --o-visualization heatmap/Heatmap_level5_freq125_sampletype.qzv
+Qiime tools view heatmap/Heatmap_level5_freq125_sampletype.qzv
+
+===============================================================================
+#ANCOM~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+
+qiime feature-table rarefy \
+  --i-table Files/table_filtered16S.qza \
+  --p-sampling-depth 3893 \
+  --o-rarefied-table ancom/rarefied_filtered_table.qza
+qiime taxa collapse \
+  --i-table ancom/rarefied_filtered_table.qza \
+  --i-taxonomy Files/taxonomy.qza \
+  --p-level 6 \
+  --o-collapsed-table ancom/tablefiltered_collapsed_6.qza
+qiime feature-table filter-features \
+  --i-table ancom/tablefiltered_collapsed_6.qza \
+  --p-min-frequency 10 \
+  --p-min-samples 6 \
+  --o-filtered-table ancom/table_ancom.qza
+qiime composition add-pseudocount \
+  --i-table ancom/table_ancom.qza \
+  --o-composition-table ancom/table_ancom-pseudocount.qza
+qiime composition ancom \
+  --i-table ancom/table_ancom-pseudocount.qza \
+  --m-metadata-file Files/metadata_range.txt \
+  --m-metadata-column SampleType \
+  --o-visualization ancom/ancom_lvl5_freq10.qzv
+Qiime tools view ancom/ancom_lvl5_freq10.qzv
+
+
+|####################################################################################################
+|16S CORAL###########################################################################################
+|####################################################################################################
+
+===============================================================================
+#Filtering samples by sample type; summarize table to ensure it worked~~~~~~~~
+===============================================================================
+
+qiime feature-table filter-samples \
+  --i-table Files/table_filtered16S.qza \
+  --m-metadata-file Files/sample_metadata_coralonly_16S.txt \
+  --o-filtered-table Files/id-filtered-table_coral.qza
+qiime feature-table summarize \
+  --i-table Files/id-filtered-table_coral.qza \
+  --m-sample-metadata-file Files/sample_metadata_coralonly_16S.txt \
+  --o-visualization Files/id-filtered-table_coral.qzv
+Qiime tools view Files/id-filtered-table_coral.qzv
+
+
+===============================================================================
+#Alpha Diversity~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+
+qiime diversity alpha-rarefaction \
+  --i-table Files/id-filtered-table_coral.qza \
+  --i-phylogeny Files/rooted-tree.qza \
+  --p-max-depth 22733 \
+  --m-metadata-file Files/sample_metadata_coralonly_16S.txt \
+  --o-visualization AlphaDiversity/alpha-rarefaction.qzv
+
+qiime diversity core-metrics-phylogenetic \
+  --i-phylogeny rooted-tree.qza \
+  --i-table id-filtered-table_coral.qza \
+  --p-sampling-depth 22733 \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --output-dir core-metrics-results-coral
+----------
+#Shannon#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results-coral/shannon_vector.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --o-visualization core-metrics-results-coral/shannon-vector-group-significance-Sed.qzv
+Qiime tools view core-metrics-results-coral/shannon-vector-group-significance-Sed.qzv
+----------
+#Faith#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results-coral/faith_pd_vector.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --o-visualization core-metrics-results-coral/faith-pd-group-significance.qzv
+Qiime tools view core-metrics-results-coral/faith-pd-group-significance.qzv
+----------
+#OTUS#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results-coral/observed_features_vector.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --o-visualization core-metrics-results-coral/observed-features-group-significance.qzv
+Qiime tools view core-metrics-results-coral/observed-features-group-significance.qzv
+----------
+#EVENNESS#|
+----------
+qiime diversity alpha-group-significance \
+  --i-alpha-diversity core-metrics-results-coral/evenness_vector.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --o-visualization core-metrics-results-coral/evenness_vector-significance.qzv
+Qiime tools view core-metrics-results-coral/evenness_vector-significance.qzv
+
+===============================================================================
+#Beta Diversity~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+-------------------
+#Weighted Unifrac#|
+-------------------
+Salinity
+~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --m-metadata-column Salinity \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-Salinity_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-Salinity_Site-significance.qzv
+~~~~~
+DEPTH
+~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --m-metadata-column Depth \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-Depth_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-Depth_Site-significance.qzv
+~~~~~
+NPDW
+~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --m-metadata-column npdw \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-npdw_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-npdw_Site-significance.qzv
+~~~~~~~~~~~~
+TEMPERATURE
+~~~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --m-metadata-column Temperature \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-temp_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-temp_Site-significance.qzv
+~~~~~~~~
+PRESSURE
+~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --m-metadata-column Pressure \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-pressure_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-pressure_Site-significance.qzv
+~~~~~~~~
+SEAMOUNT
+~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --m-metadata-column Seamount \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-seamount_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-seamount_Site-significance.qzv
+~~~~~~~~~~
+CORALGENUS
+~~~~~~~~~~
+qiime diversity beta-group-significance \
+  --i-distance-matrix core-metrics-results-coral/weighted_unifrac_distance_matrix.qza \
+  --m-metadata-file sample_metadata_coralonly_16S.txt \
+  --m-metadata-column CoralGenus \
+  --p-pairwise \
+  --o-visualization core-metrics-results-coral/weighted-unifrac-coralgenus_Site-significance.qzv
+Qiime tools view core-metrics-results-coral/weighted-unifrac-coralgenus_Site-significance.qzv
+
+
+===============================================================================
+#Heatmap~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+qiime feature-table rarefy \
+  --i-table Files/id-filtered-table_coral.qza \
+  --p-sampling-depth 22733 \
+  --o-rarefied-table heatmap/id-rarefied-table-16Scoral.qza
+
+qiime feature-table filter-features \
+  --i-table heatmap/id-rarefied-table-16Scoral.qza \
+  --p-min-frequency 900 \
+  --o-filtered-table heatmap/Only_Highly_abundanttaxa_900.qza
+qiime taxa collapse \
+  --i-table heatmap/Only_Highly_abundanttaxa_900.qza \
+  --i-taxonomy Files/taxonomy.qza \
+  --p-level 6 \
+  --o-collapsed-table heatmap/Only_Highly_abundanttaxa_900_level6.qza
+qiime feature-table heatmap \
+  --i-table heatmap/Only_Highly_abundanttaxa_900_level6.qza \
+  --m-sample-metadata-file Files/sample_metadata_update16Scoral.txt \
+  --m-sample-metadata-column CoralGenus \
+  --p-color-scheme coolwarm \
+  --o-visualization heatmap/coral16S-heatmaplevel6_900_CoralGenus.qzv
+Qiime tools view heatmap/coral16S-heatmaplevel6_900_CoralGenus.qzv
+
+===============================================================================
+#ANCOM~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+===============================================================================
+
