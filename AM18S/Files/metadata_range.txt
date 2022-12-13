@@ -1,0 +1,29 @@
+#SampleID	Files	SampleType	Seamount	Depth	Latitude	Pressure	npdw	Temperature	Salinity
+1	"AVW1-18S-UNonMet_S110_L001_R1_001.fastq.gz,AVW1-18S-UNonMet_S110_L001_R2_001.fastq.gz"	Sediment	Suiko	Shallow	44	Low	North	Med	Med
+2	"AVW2-18S-UNonMet_S111_L001_R1_001.fastq.gz,AVW2-18S-UNonMet_S111_L001_R2_001.fastq.gz"	Sediment	Hess	Shallow	34	Med	South	Low	High
+3	"AVW3-18S-UNonMet_S112_L001_R1_001.fastq.gz,AVW3-18S-UNonMet_S112_L001_R2_001.fastq.gz"	Coral	Annei	Deep	36	High	South	Low	High
+4	"AVW4-18S-UNonMet_S113_L001_R1_001.fastq.gz,AVW4-18S-UNonMet_S113_L001_R2_001.fastq.gz"	Sediment	Suiko	Deep	44	High	North	Low	High
+5	"AVW5-18S-UNonMet_S114_L001_R1_001.fastq.gz,AVW5-18S-UNonMet_S114_L001_R2_001.fastq.gz"	Sediment	Annei	Deep	36	High	South	Low	High
+6	"AVW6-18S-UNonMet_S115_L001_R1_001.fastq.gz,AVW6-18S-UNonMet_S115_L001_R2_001.fastq.gz"	Sediment	Koko	Deep	35	High	South	Low	High
+7	"AVW7-18S-UNonMet_S116_L001_R1_001.fastq.gz,AVW7-18S-UNonMet_S116_L001_R2_001.fastq.gz"	Sediment	Nintoku	Deep	41	High	North	Low	High
+8	"AVW8-18S-UNonMet_S117_L001_R1_001.fastq.gz,AVW8-18S-UNonMet_S117_L001_R2_001.fastq.gz"	Sediment	Yomei	Shallow	42	Med	North	Med	Med
+9	"AVW9-18S-UNonMet_S118_L001_R1_001.fastq.gz,AVW9-18S-UNonMet_S118_L001_R2_001.fastq.gz"	Sediment	Annei	Shallow	36	Med	South	Med	Med
+10	"AVW10-18S-UNonMet_S119_L001_R1_001.fastq.gz,AVW10-18S-UNonMet_S119_L001_R2_001.fastq.gz"	Sediment	Jingu	Shallow	38	Med	South	Med	Med
+11	"AVW11-18S-UNonMet_S120_L001_R1_001.fastq.gz,AVW11-18S-UNonMet_S120_L001_R2_001.fastq.gz"	Sediment	Jingu	Shallow	38	Med	South	Med	Med
+12	"AVW12-18S-UNonMet_S121_L001_R1_001.fastq.gz,AVW12-18S-UNonMet_S121_L001_R2_001.fastq.gz"	Coral	Annei	Shallow	36	Low	South	High	Low
+13	"AVW13-18S-UNonMet_S122_L001_R1_001.fastq.gz,AVW13-18S-UNonMet_S122_L001_R2_001.fastq.gz"	Coral	Koko	Deep	35	High	South	Low	High
+14	"AVW14-18S-UNonMet_S123_L001_R1_001.fastq.gz,AVW14-18S-UNonMet_S123_L001_R2_001.fastq.gz"	Seawater	Annei	Shallow	36	Med	South	Med	Med
+15	"AVW15-18S-UNonMet_S124_L001_R1_001.fastq.gz,AVW15-18S-UNonMet_S124_L001_R2_001.fastq.gz"	Seawater	Jingu	Shallow	38	Med	South	Med	Med
+16	"AVW16-18S-UNonMet_S125_L001_R1_001.fastq.gz,AVW16-18S-UNonMet_S125_L001_R2_001.fastq.gz"	Seawater	Jingu	Shallow	38	Med	South	Med	Med
+18	"AVW18-18S-UNonMet_S126_L001_R1_001.fastq.gz,AVW18-18S-UNonMet_S126_L001_R2_001.fastq.gz"	Seawater	Yomei	Shallow	42	Med	North	Med	Med
+19	"AVW19-18S-UNonMet_S127_L001_R1_001.fastq.gz,AVW19-18S-UNonMet_S127_L001_R2_001.fastq.gz"	Coral	Annei	Shallow	36	Med	South	Med	Med
+20	"AVW20-18S-UNonMet_S128_L001_R1_001.fastq.gz,AVW20-18S-UNonMet_S128_L001_R2_001.fastq.gz"	Coral	Annei	Shallow	36	Med	South	Med	Med
+21	"AVW21-18S-UNonMet_S129_L001_R1_001.fastq.gz,AVW21-18S-UNonMet_S129_L001_R2_001.fastq.gz"	Coral	Koko	Deep	35	High	South	Low	High
+22	"AVW22-18S-UNonMet_S130_L001_R1_001.fastq.gz,AVW22-18S-UNonMet_S130_L001_R2_001.fastq.gz"	Coral	Suiko	Deep	44	High	North	Low	High
+23	"AVW23-18S-UNonMet_S131_L001_R1_001.fastq.gz,AVW23-18S-UNonMet_S131_L001_R2_001.fastq.gz"	Coral	Suiko	Deep	44	High	North	Low	High
+24	"AVW24-18S-UNonMet_S132_L001_R1_001.fastq.gz,AVW24-18S-UNonMet_S132_L001_R2_001.fastq.gz"	Seawater	Suiko	Shallow	44	Low	North	Med	Med
+25	"AVW25-18S-UNonMet_S133_L001_R1_001.fastq.gz,AVW25-18S-UNonMet_S133_L001_R2_001.fastq.gz"	Seawater	Suiko	Deep	44	High	North	Low	High
+									
+									
+									
+									
