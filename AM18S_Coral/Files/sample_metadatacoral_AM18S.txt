@@ -1,0 +1,9 @@
+#SampleID	Files	SampleType	Seamount	Depth	Latitude	Pressure	npdw	Temperature	Salinity	Temper	Saliniter	CoralGenus
+3	"AVW3-18S-UNonMet_S112_L001_R1_001.fastq.gz,AVW3-18S-UNonMet_S112_L001_R2_001.fastq.gz"	Coral	Annei	Deep	36	High	South	Low	High	Low	High	Unidentified
+12	"AVW12-18S-UNonMet_S121_L001_R1_001.fastq.gz,AVW12-18S-UNonMet_S121_L001_R2_001.fastq.gz"	Coral	Annei	Shallow	36	Low	South	High	Low	Med	Med	Lepidisis
+13	"AVW13-18S-UNonMet_S122_L001_R1_001.fastq.gz,AVW13-18S-UNonMet_S122_L001_R2_001.fastq.gz"	Coral	Koko	Deep	35	High	South	Low	High	Low	High	Keratoisis
+19	"AVW19-18S-UNonMet_S127_L001_R1_001.fastq.gz,AVW19-18S-UNonMet_S127_L001_R2_001.fastq.gz"	Coral	Annei	Shallow	36	Med	South	Med	Med	Med	Med	Isidella
+20	"AVW20-18S-UNonMet_S128_L001_R1_001.fastq.gz,AVW20-18S-UNonMet_S128_L001_R2_001.fastq.gz"	Coral	Annei	Shallow	36	Med	South	Med	Med	Med	Med	Isidella
+21	"AVW21-18S-UNonMet_S129_L001_R1_001.fastq.gz,AVW21-18S-UNonMet_S129_L001_R2_001.fastq.gz"	Coral	Koko	Deep	35	High	South	Low	High	Low	High	Keratoisis
+22	"AVW22-18S-UNonMet_S130_L001_R1_001.fastq.gz,AVW22-18S-UNonMet_S130_L001_R2_001.fastq.gz"	Coral	Suiko	Deep	44	High	North	Low	High	Low	High	Lepidisis
+23	"AVW23-18S-UNonMet_S131_L001_R1_001.fastq.gz,AVW23-18S-UNonMet_S131_L001_R2_001.fastq.gz"	Coral	Suiko	Deep	44	High	North	Low	High	Low	High	Lepidisis
