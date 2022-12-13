@@ -1,0 +1,9 @@
+#SampleID	Files	SampleType	Seamount	Depth	Latitude	Pressure	npdw	Temperature	Salinity	CoralGenus	temper	Saliniter
+3	"AVW3-16S_S3_L001_R1_001.fastq.gz,AVW3-16S_S3_L001_R2_001.fastq.gz"	Coral	Annei	Deep	36	High	South	Low	High	Unclassified	Low	High
+12	"AVW12-16S_S12_L001_R1_001.fastq.gz,AVW12-16S_S12_L001_R2_001.fastq.gz"	Coral	Annei	Shallow	36	Low	South	High	Low	Lepidisis	Med	Med
+13	"AVW13-16S_S13_L001_R1_001.fastq.gz,AVW13-16S_S13_L001_R2_001.fastq.gz"	Coral	Koko	Deep	35	High	South	Low	High	Keratoisis	Low	High
+19	"AVW19-16S_S18_L001_R1_001.fastq.gz,AVW19-16S_S18_L001_R2_001.fastq.gz"	Coral	Annei	Shallow	36	Med	South	Med	Med	Isidella	Med	Med
+20	"AVW20-16S_S19_L001_R1_001.fastq.gz,AVW20-16S_S19_L001_R2_001.fastq.gz"	Coral	Annei	Shallow	36	Med	South	Med	Med	Isidella	Med	Med
+21	"AVW21-16S_S20_L001_R1_001.fastq.gz,AVW21-16S_S20_L001_R2_001.fastq.gz"	Coral	Koko	Deep	35	High	South	Low	High	Keratoisis	Low	High
+22	"AVW22-16S_S21_L001_R1_001.fastq.gz,AVW22-16S_S21_L001_R2_001.fastq.gz"	Coral	Suiko	Deep	44	High	North	Low	High	Lepidisis	Low	High
+23	"AVW23-16S_S22_L001_R1_001.fastq.gz,AVW23-16S_S22_L001_R2_001.fastq.gz"	Coral	Suiko	Deep	44	High	North	Low	High	Lepidisis	Low	High
